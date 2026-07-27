@@ -40,7 +40,6 @@ function Navbar({ currentUser }) {
     return (
         <nav className="navbar">
             <div className="nav-brand">
-                <img src={logo} alt="" srcset="" />
                 <ul className="nav-links">
                     <li><Link to="/">HOME</Link></li>
                     {currentUser && <li><Link to="/create">CREATE</Link></li>}
