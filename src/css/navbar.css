@@ -18,8 +18,8 @@
     box-sizing: border-box;
     z-index: 1000;
 
-    background: rgba(20, 20, 20, 0.92);
-    backdrop-filter: blur(16px);
+    background: rgba(56, 56, 56, 0.92);
+    backdrop-filter: blur(10px);
 
     border-bottom: 1px solid #2d2d2d;
 

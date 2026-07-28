@@ -11,12 +11,13 @@ import Navbar from './components/Navbar';
 
 import {
   createStoryInDb,
-  fetchStoriesFromDb,
+  listenToStories,
   deleteStoryFromDb,
   updateStoryInDb,
   isFirebaseConfigured,
   observeAuthState
 } from './firebase';
+
 
 
 const initialStories = [
@@ -32,19 +33,22 @@ const initialStories = [
     location: "Unknown",
 
     summary:
-        "The mysterious significance of the numbers 3, 6 and 9 throughout history.",
+      "The mysterious significance of the numbers 3, 6 and 9 throughout history.",
 
     Imgurl: "...",
 
     content: "..."
-}
+  }
 ];
+
 
 
 const ADMIN_EMAIL = 'prajju.c18@gmail.com';
 
 
+
 function App() {
+
 
   const [stories, setStories] = useState(
     initialStories.map(story => ({
@@ -54,32 +58,54 @@ function App() {
     }))
   );
 
+
   const [favorites, setFavorites] = useState([]);
+
   const [currentUser, setCurrentUser] = useState(null);
 
 
+
   /*
-   * Load stories from Firebase
+   * REALTIME STORY LISTENER
    */
   useEffect(() => {
 
-    const loadStories = async () => {
 
-      if (!isFirebaseConfigured) {
-        return;
-      }
+    if (!isFirebaseConfigured) {
+      return;
+    }
 
-      const remoteStories = await fetchStoriesFromDb();
+
+    const unsubscribe = listenToStories((remoteStories) => {
+
 
       if (remoteStories.length > 0) {
+
         setStories(remoteStories);
+
       }
+
+
+    });
+
+
+
+    return () => {
+
+
+      if (unsubscribe) {
+
+        unsubscribe();
+
+      }
+
 
     };
 
-    loadStories();
 
   }, []);
+
+
 
 
   /*
@@ -87,19 +113,32 @@ function App() {
    */
   useEffect(() => {
 
+
     const unsubscribe = observeAuthState((user) => {
+
       setCurrentUser(user);
+
     });
+
+
 
     return () => {
 
+
       if (unsubscribe) {
+
         unsubscribe();
+
       }
+
 
     };
 
+
   }, []);
+
+
+
 
 
   /*
@@ -107,24 +146,35 @@ function App() {
    */
   const addFavorite = (story) => {
 
+
     setFavorites((prevFavorites) => {
+
 
       const alreadyExists = prevFavorites.some(
         item => item.id === story.id
       );
 
+
       if (alreadyExists) {
+
         return prevFavorites;
+
       }
+
 
       return [
         ...prevFavorites,
         story
       ];
 
+
     });
 
+
   };
+
+
+
 
 
   /*
@@ -132,13 +182,20 @@ function App() {
    */
   const removeFavorite = (storyId) => {
 
+
     setFavorites((prevFavorites) =>
+
       prevFavorites.filter(
         item => item.id !== storyId
       )
+
     );
 
+
   };
+
+
+
 
 
   /*
@@ -146,100 +203,145 @@ function App() {
    */
   const createStory = async (storyData) => {
 
-const newStory = {
 
-    title: storyData.title,
-    
-  category: storyData.category,
+    const newStory = {
 
-  intensity: storyData.intensity,
 
-  readTime: storyData.readTime,
-    date:
-        storyData.date ||
-        new Date().toLocaleDateString(
-            "en-US",
-            {
-                month: "long",
-                day: "numeric",
-                year: "numeric"
-            }
-        ),
+      title: storyData.title,
 
-    Imgurl: storyData.Imgurl || "/default.png",
-
-    category:
+      category:
         storyData.category || "Unclassified",
 
-    intensity:
+
+      intensity:
         storyData.intensity || "Class I",
 
-    location:
+
+      readTime:
+        storyData.readTime || "5 min",
+
+
+
+      date:
+        storyData.date ||
+        new Date().toLocaleDateString(
+          "en-US",
+          {
+            month:"long",
+            day:"numeric",
+            year:"numeric"
+          }
+        ),
+
+
+
+      Imgurl:
+        storyData.Imgurl || "/default.png",
+
+
+
+      location:
         storyData.location || "Unknown",
 
-    summary:
+
+
+      summary:
         storyData.summary || "",
 
-    content:
+
+
+      content:
         storyData.content ||
         "A new story created by the user.",
 
-    creatorName:
+
+
+      creatorName:
         currentUser?.displayName ||
         "Anonymous"
 
-};
+
+    };
 
 
-    /*
-     * Save to Firebase if possible
-     */
+
+
+
     if (isFirebaseConfigured && currentUser) {
 
+
       const savedStory = await createStoryInDb(
+
         newStory,
+
         currentUser.uid,
+
         currentUser.displayName
+
       );
+
+
 
       if (savedStory) {
 
+
         setStories((prevStories) => [
+
           savedStory,
+
           ...prevStories
+
         ]);
+
+
 
         return savedStory;
 
+
       }
+
 
     }
 
 
-    /*
-     * Local fallback
-     */
+
+
+
     const fallbackStory = {
+
 
       id: Date.now(),
 
+
       ...newStory,
+
 
       creatorId:
         currentUser?.uid ||
         'local'
 
+
     };
 
 
+
     setStories((prevStories) => [
+
       fallbackStory,
+
       ...prevStories
+
     ]);
+
+
 
     return fallbackStory;
 
+
   };
+
+
+
 
 
   /*
@@ -247,86 +349,131 @@ const newStory = {
    */
   const updateStory = async (storyId, storyData) => {
 
+
     if (isFirebaseConfigured) {
 
+
       await updateStoryInDb(
+
         storyId,
+
         storyData
+
       );
+
 
     }
 
 
+
     setStories((prevStories) =>
+
 
       prevStories.map((story) =>
 
+
         String(story.id) === String(storyId)
 
+
           ? {
+
               ...story,
+
               ...storyData
+
             }
+
 
           : story
 
+
       )
 
+
     );
+
 
   };
 
 
+
+
+
   /*
-   * Delete a story
+   * Delete story
    */
   const deleteStory = async (storyId) => {
 
+
     if (isFirebaseConfigured) {
 
+
       await deleteStoryFromDb(storyId);
+
 
     }
 
 
+
     setStories((prevStories) =>
 
+
       prevStories.filter(
+
         story =>
+
           String(story.id) !== String(storyId)
+
       )
 
+
     );
+
 
   };
 
 
+
+
+
   /*
-   * Upvote or remove an upvote
+   * Upvote story
    */
   const upvoteStory = async (storyId) => {
 
+
     if (!currentUser) {
+
 
       alert(
         'Please sign in to upvote stories'
       );
 
+
       return;
+
 
     }
 
 
+
     setStories((prevStories) =>
+
 
       prevStories.map((story) => {
 
+
         if (
+
           String(story.id) === String(storyId)
+
         ) {
+
 
           const upvoters =
             story.upvoters || [];
+
+
 
           const hasUpvoted =
             upvoters.includes(
@@ -334,11 +481,15 @@ const newStory = {
             );
 
 
+
           let newUpvotes;
+
           let newUpvoters;
 
 
+
           if (hasUpvoted) {
+
 
             newUpvotes =
               Math.max(
@@ -346,162 +497,252 @@ const newStory = {
                 (story.upvotes || 0) - 1
               );
 
+
+
             newUpvoters =
               upvoters.filter(
-                id =>
-                  id !== currentUser.uid
+
+                id => id !== currentUser.uid
+
               );
 
+
           } else {
+
 
             newUpvotes =
               (story.upvotes || 0) + 1;
 
+
+
             newUpvoters = [
+
               ...upvoters,
+
               currentUser.uid
+
             ];
+
 
           }
 
 
-          /*
-           * Save upvotes to Firebase
-           */
+
           if (isFirebaseConfigured) {
 
+
             import('./firebase')
-              .then(({ updateStoryUpvotes }) => {
+
+              .then(({updateStoryUpvotes}) => {
+
 
                 updateStoryUpvotes(
+
                   storyId,
+
                   newUpvotes,
+
                   newUpvoters
-                )
-                  .catch(err =>
-                    console.error(
-                      'Error updating upvotes:',
-                      err
-                    )
-                  );
+
+                );
+
 
               });
 
+
           }
+
 
 
           return {
 
+
             ...story,
 
-            upvotes:
-              newUpvotes,
 
-            upvoters:
-              newUpvoters
+            upvotes:newUpvotes,
+
+
+            upvoters:newUpvoters
+
 
           };
+
 
         }
 
 
+
         return story;
+
 
       })
 
+
     );
+
 
   };
 
 
-  /*
-   * User permissions
-   */
+
+
+
+
   const isAdmin =
     currentUser &&
     currentUser.email === ADMIN_EMAIL;
 
 
+
+
   const isCreator = (creatorId) =>
+
     currentUser &&
     currentUser.uid === creatorId;
+
+
+
+
 
 
   return (
 
     <div>
 
+
       <Navbar
+
         currentUser={currentUser}
+
       />
+
 
 
       <main className="main-content">
 
+
         <Routes>
 
+
+
           <Route
+
             path="/"
+
             element={
+
               <Home
+
                 stories={stories}
+
                 onAddFavorite={addFavorite}
+
                 onUpvote={upvoteStory}
+
                 currentUser={currentUser}
+
               />
+
             }
+
           />
 
 
+
+
+
           <Route
+
             path="/create"
+
             element={
+
               <CreateStoryPage
+
                 onCreateStory={createStory}
+
                 currentUser={currentUser}
+
               />
+
             }
+
           />
 
 
+
+
+
           <Route
+
             path="/fav"
+
             element={
+
               <Favourites
+
                 favorites={favorites}
+
                 onRemoveFavorite={removeFavorite}
+
               />
+
             }
+
           />
 
 
+
+
+
           <Route
-    path="/story/:storyId"
-    element={
-        <StoryDetail
-            stories={stories}
-            currentUser={currentUser}
-            isAdmin={isAdmin}
-            isCreator={isCreator}
-            onDeleteStory={deleteStory}
-            onUpdateStory={updateStory}
-            onUpvote={upvoteStory}
-            onAddFavorite={addFavorite}
-        />
-    }
->
 
-</Route>
+            path="/story/:storyId"
 
-</Routes>
+            element={
+
+
+              <StoryDetail
+
+                stories={stories}
+
+                currentUser={currentUser}
+
+                isAdmin={isAdmin}
+
+                isCreator={isCreator}
+
+                onDeleteStory={deleteStory}
+
+                onUpdateStory={updateStory}
+
+                onUpvote={upvoteStory}
+
+                onAddFavorite={addFavorite}
+
+              />
+
+
+            }
+
+          />
+
+
+
+        </Routes>
+
 
       </main>
+
 
     </div>
 
   );
 
+
 }
+
 
 
 export default App;

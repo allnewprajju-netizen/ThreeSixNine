@@ -519,9 +519,9 @@
    ========================= */
 .story-detail{
     width:100%;
-    max-width:none;
+    min-height:100vh;
     margin:0;
-    padding:40px 40px 80px;
+    padding:0;
     color:#d7dce5;
     box-sizing:border-box;
 }
@@ -543,12 +543,12 @@
 
 .story-detail-card{
     width:100%;
+    min-height:100vh;
     background:#171b21;
-    border:1px solid #2d333b;
-    border-radius:18px;
+    border:none;
+    border-radius:0;
     overflow:hidden;
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.45);
+    box-shadow:none;
 }
 
 .story-detail-card img{
@@ -624,7 +624,10 @@
 }
 
 .story-detail-content{
-    padding:45px;
+    width:100%;
+    max-width:none;
+    padding:60px 10%;
+    box-sizing:border-box;
 }
 
 /* ---------- Header ---------- */
@@ -876,8 +879,7 @@
 }
 
 .story-detail-content{
-
-    padding:28px;
+    padding:30px 20px;
 }
 
 .title{
@@ -898,8 +900,11 @@
 }
 
 .story-hero img{
-
-    height:280px;
+    width:100%;
+    height:70vh;
+    min-height:500px;
+    object-fit:cover;
+    display:block;
 }
 
 .story-hero-overlay{
