@@ -29,6 +29,8 @@
 .main-content {
     padding-top: 72px;
 }
+
+
 /* ========================================= */
 /* BRAND */
 /* ========================================= */
@@ -93,8 +95,6 @@
 
 }
 
-
-/* underline animation */
 
 .nav-links a::after{
 
@@ -179,8 +179,6 @@
 }
 
 
-/* Google Sign In */
-
 .auth-btn{
 
     background:#f5f5f5;
@@ -196,8 +194,6 @@
 
 }
 
-
-/* Admin */
 
 .admin-btn{
 
@@ -216,7 +212,7 @@
 
 
 /* ========================================= */
-/* MOBILE */
+/* TABLET */
 /* ========================================= */
 
 @media(max-width:900px){
@@ -229,13 +225,13 @@
 
 .nav-links{
 
-    gap:1.2rem;
+    gap:1rem;
 
 }
 
 .nav-links a{
 
-    font-size:.9rem;
+    font-size:.85rem;
 
 }
 
@@ -245,14 +241,81 @@
 
 }
 
+.auth-btn,
+.admin-btn{
+
+    padding:0 14px;
+    font-size:.8rem;
+
+}
+
 }
 
 
+/* ========================================= */
+/* MOBILE */
+/* ========================================= */
+
 @media(max-width:650px){
+
+.navbar{
+
+    height:auto;
+    min-height:72px;
+
+    padding:15px 1rem;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+}
+
+
+.nav-brand a{
+
+    font-size:1.1rem;
+
+}
+
 
 .nav-links{
 
-    display:none;
+    display:flex;
+
+    order:3;
+
+    width:100%;
+
+    justify-content:center;
+
+    gap:1.2rem;
+
+}
+
+
+.nav-links a{
+
+    font-size:.8rem;
+
+}
+
+
+.nav-auth{
+
+    gap:.5rem;
+
+}
+
+
+.auth-btn,
+.admin-btn{
+
+    height:36px;
+
+    padding:0 12px;
+
+    font-size:.75rem;
 
 }
 

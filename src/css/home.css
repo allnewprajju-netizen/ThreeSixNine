@@ -517,13 +517,13 @@
 /* =========================
    STORY DETAIL
    ========================= */
-
 .story-detail{
     width:100%;
-    max-width:950px;
-    margin:auto;
-    padding:40px 20px 80px;
+    max-width:none;
+    margin:0;
+    padding:40px 40px 80px;
     color:#d7dce5;
+    box-sizing:border-box;
 }
 
 .back-link{
@@ -542,6 +542,7 @@
 }
 
 .story-detail-card{
+    width:100%;
     background:#171b21;
     border:1px solid #2d333b;
     border-radius:18px;
@@ -555,7 +556,6 @@
     height:420px;
     object-fit:cover;
 }
-
 /* =========================
    HERO HEADER
 ========================= */

@@ -69,7 +69,7 @@ function Home({ stories = [], onAddFavorite, onUpvote, currentUser }) {
                 <div className="featured-section">
 
                     <div className="featured-label">
-    MOST CREDIBLE REPORT
+    MOST VIEWED
 </div>
 
 
@@ -91,7 +91,7 @@ function Home({ stories = [], onAddFavorite, onUpvote, currentUser }) {
                             />
 
                             <div className="featured-upvote-badge">
-                                {mostUpvoted.upvotes} ⭐ UPVOTES
+                                {mostUpvoted.upvotes} ⬆ UPVOTES
                             </div>
 
                         </div>
@@ -143,7 +143,7 @@ function Home({ stories = [], onAddFavorite, onUpvote, currentUser }) {
                                         )
                                     }
                                 >
-                                    ⭐ Upvote (
+                                    ⬆ Upvote (
                                     {mostUpvoted.upvotes}
                                     )
                                 </button>

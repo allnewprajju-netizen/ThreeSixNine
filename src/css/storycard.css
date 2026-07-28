@@ -346,6 +346,15 @@
     border-color:#495363;
 }
 
+.fav-btn:active {
+    
+    transform:translateY(1px);
+
+    border-color:#303743;
+
+    background-color: white;
+}
+
 .upvote-btn.upvoted{
 
     background:#ffd166;
@@ -355,6 +364,14 @@
     border-color:#ffd166;
 }
 
+.fav-btn.favorited{
+
+    background:#ff4f4f;
+
+    color:white;
+
+    border-color:#ff4f4f;
+}
 
 /* ===========================
    MOBILE
