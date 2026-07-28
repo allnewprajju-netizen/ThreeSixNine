@@ -1,71 +1,184 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../css/home.css';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "../css/home.css";
 
-function CreateStoryPage({ onCreateStory, currentUser }) {
+function CreateStoryPage({ onCreateStory }) {
+
     const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
-        title: '',
-        date: '',
-        Imgurl: '',
-        content: ''
+
+        title: "",
+
+        date: "",
+
+        Imgurl: "",
+
+        category: "Conspiracy",
+
+        intensity: "Medium",
+
+        readTime: "5 min",
+
+        content: ""
+
     });
 
     useEffect(() => {
-        // Set today's date as default
-        const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-        setFormData(prev => ({ ...prev, date: today }));
+
+        const today = new Date().toLocaleDateString(
+            "en-US",
+            {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
+
+        setFormData(prev => ({
+            ...prev,
+            date: today
+        }));
+
     }, []);
 
-    const handleSubmit = async (e) => {
+    function handleChange(e) {
+
+        setFormData({
+
+            ...formData,
+
+            [e.target.name]: e.target.value
+
+        });
+
+    }
+
+    async function handleSubmit(e) {
+
         e.preventDefault();
+
         if (!formData.title.trim()) return;
 
         await onCreateStory({
+
+            ...formData,
+
             title: formData.title.trim(),
-            date: formData.date.trim() || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-            Imgurl: formData.Imgurl.trim() || '',
-            content: formData.content.trim() || 'A new story created by the user.'
+
+            Imgurl: formData.Imgurl.trim(),
+
+            content: formData.content.trim()
+
         });
 
-        navigate('/');
-    };
+        navigate("/");
+
+    }
 
     return (
+
         <div className="home">
-            <h1>Create a New Story</h1>
-            <form className="create-story-form" onSubmit={handleSubmit}>
+
+            <form
+                className="create-story-form"
+                onSubmit={handleSubmit}
+            >
+
+                <h2>New Archive Entry</h2>
+
                 <div className="form-grid">
+
                     <input
-                        type="text"
-                        placeholder="Story title"
+                        name="title"
+                        placeholder="Report Title"
                         value={formData.title}
-                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                        onChange={handleChange}
                         required
                     />
+
                     <input
-                        type="text"
+                        name="date"
                         placeholder="Date"
                         value={formData.date}
-                        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                        onChange={handleChange}
                     />
+
                     <input
-                        type="text"
-                        placeholder="Search for an image or provide a URL"
+                        name="Imgurl"
+                        placeholder="Cover Image URL"
                         value={formData.Imgurl}
-                        onChange={(e) => setFormData({ ...formData, Imgurl: e.target.value })}
+                        onChange={handleChange}
                     />
+
+                    <select
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                    >
+                        <option>Conspiracy</option>
+                        <option>Theory</option>
+                        <option>Mystery</option>
+                        <option>Paranormal</option>
+                        <option>Historical</option>
+                        <option>Government</option>
+                        <option>Science</option>
+                        <option>Psychology</option>
+                    </select>
+
+                    <select
+                        name="intensity"
+                        value={formData.intensity}
+                        onChange={handleChange}
+                    >
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                        <option>Extreme</option>
+                    </select>
+
+                    <input
+                        name="readTime"
+                        placeholder="Estimated Reading Time"
+                        value={formData.readTime}
+                        onChange={handleChange}
+                    />
+
                 </div>
+
                 <textarea
-                    placeholder="Story content"
-                    rows="5"
+                    name="content"
+                    placeholder="Write your report..."
+                    rows="14"
                     value={formData.content}
-                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                    onChange={handleChange}
                 />
-                <button type="submit" className="create-btn">ADD STORY</button>
+
+                <div className="edit-actions">
+
+                    <button
+                        className="cancel-btn"
+                        type="button"
+                        onClick={() => navigate("/")}
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        className="create-btn"
+                        type="submit"
+                    >
+                        Publish Report
+                    </button>
+
+                </div>
+
             </form>
+
         </div>
+
     );
+
 }
 
 export default CreateStoryPage;

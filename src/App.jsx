@@ -24,30 +24,20 @@ const initialStories = [
     id: 1,
     title: "Three Six Nine",
     date: "July 27 2026",
-    Imgurl: "https://imgs.search.brave.com/XYVqd-t9QpThao7KT6j2F_IWnr_S174H3lerhbH5OMg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9zZWNy/ZXQtdW5pdmVyc2Ut/bnVtYmVycy1zZWNy/ZXQtdW5pdmVyc2Ut/bnVtYmVycy1zZWNy/ZXQtdW5pdmVyc2Ut/bnVtYmVycy1zZWNy/ZXQtdW5pdmVyc2Ut/bnVtYmVycy0yNzgz/OTMyMDguanBn",
-    content: "A mysterious story that invites readers to think beyond the visible world."
-  },
-  {
-    id: 2,
-    title: "Illuminati",
-    date: "July 27 2026",
-    Imgurl: "https://imgs.search.brave.com/wxsrZJVhuKy96OoJAGFm-e26gNyyeC9DlPc5XGrmOs0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzE5LzU4LzQzLzM1/LzM2MF9GXzE5NTg0/MzM1MzVfcFBDNzlC/STBNb0FBMk1Jc0lU/cUxlMHBocHJLWlZE/TGIuanBn",
-    content: "A deep dive into hidden symbols, power, and influence across history."
-  },
-  {
-    id: 3,
-    title: "Not a",
-    date: "July 27 2026",
-    Imgurl: "https://imgs.search.brave.com/dlsn4Y185DmiXYcS1igUAoxfDEyCGpmmQ82d5jGZYz4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0aW1hZ2Vz/LmNvbS9pZC8xMDgy/MjQ2MTcvcGhvdG8v/c2lsaG91ZXR0ZS1v/Zi1hLXByaXNvbi1w/b2xpY2Utd2FyZGVu/LmpwZz9zPTYxMngx/MjImdz0wJms9MjAm/Yz05WGhOXzIzeEdH/QnA5bE9WTlVfUWx5/SVR1Y1lRNzNvVXNV/UEdtdmdhOE1MOD0",
-    content: "An unusual tale that turns everyday assumptions upside down."
-  },
-  {
-    id: 4,
-    title: "Dark Forest Theory",
-    date: "July 27 2026",
-    Imgurl: "https://imgs.search.brave.com/KGaxf6oiugeg3DmnUCevCmBxQKRU2oi5LfWgwLYF5dg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTMy/NTIzMzU5L3Bob3Rv/L3Nwb29reS1kYXJr/LWZvcmVzdC1hdC1u/aWdodC1pbi1tb29u/bGlnaHQuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPWw2SXlT/Q2I1cDVvcW5sVE5v/VEpuY2x3UFdkazdO/MjEzVVpRYzg0d0FM/U3c9",
-    content: "A haunting story about shadows, secrets, and the unknown."
-  }
+
+    category: "Conspiracy",
+
+    intensity: "Class III",
+
+    location: "Unknown",
+
+    summary:
+        "The mysterious significance of the numbers 3, 6 and 9 throughout history.",
+
+    Imgurl: "...",
+
+    content: "..."
+}
 ];
 
 
@@ -156,32 +146,49 @@ function App() {
    */
   const createStory = async (storyData) => {
 
-    const newStory = {
+const newStory = {
 
-      title: storyData.title,
+    title: storyData.title,
+    
+  category: storyData.category,
 
-      date:
+  intensity: storyData.intensity,
+
+  readTime: storyData.readTime,
+    date:
         storyData.date ||
         new Date().toLocaleDateString(
-          'en-US',
-          {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric'
-          }
+            "en-US",
+            {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
         ),
 
-      Imgurl: storyData.Imgurl || '/default.png',
+    Imgurl: storyData.Imgurl || "/default.png",
 
-      content:
+    category:
+        storyData.category || "Unclassified",
+
+    intensity:
+        storyData.intensity || "Class I",
+
+    location:
+        storyData.location || "Unknown",
+
+    summary:
+        storyData.summary || "",
+
+    content:
         storyData.content ||
-        'A new story created by the user.',
+        "A new story created by the user.",
 
-      creatorName:
+    creatorName:
         currentUser?.displayName ||
-        'Anonymous'
+        "Anonymous"
 
-    };
+};
 
 
     /*
@@ -469,20 +476,24 @@ function App() {
 
 
           <Route
-            path="/story/:storyId"
-            element={
-              <StoryDetail
-                stories={stories}
-                currentUser={currentUser}
-                isAdmin={isAdmin}
-                isCreator={isCreator}
-                onDeleteStory={deleteStory}
-                onUpdateStory={updateStory}
-              />
-            }
-          />
+    path="/story/:storyId"
+    element={
+        <StoryDetail
+            stories={stories}
+            currentUser={currentUser}
+            isAdmin={isAdmin}
+            isCreator={isCreator}
+            onDeleteStory={deleteStory}
+            onUpdateStory={updateStory}
+            onUpvote={upvoteStory}
+            onAddFavorite={addFavorite}
+        />
+    }
+>
 
-        </Routes>
+</Route>
+
+</Routes>
 
       </main>
 

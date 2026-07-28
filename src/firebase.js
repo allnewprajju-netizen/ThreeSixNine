@@ -57,11 +57,19 @@ export async function createStoryInDb(storyData, userId, displayName) {
   if (!db) return null;
 
   const payload = {
-    ...storyData,
-    creatorId: userId,
-    creatorName: displayName || 'Anonymous',
-    createdAt: new Date().toISOString()
-  };
+  ...storyData,
+
+  category: storyData.category || "Conspiracy",
+  intensity: storyData.intensity || "Medium",
+  readTime: storyData.readTime || "5 min",
+
+  creatorId: userId,
+  creatorName: displayName || "Anonymous",
+  createdAt: new Date().toISOString(),
+
+  upvotes: 0,
+  upvoters: []
+};
 
   const docRef = await addDoc(collection(db, 'stories'), payload);
   return { id: docRef.id, ...payload };
@@ -108,20 +116,23 @@ export async function seedDummyStories(userId, displayName) {
       upvotes: 0,
       upvoters: []
     },
-    {
-      title: "Not as it Seems",
-      content: "An unusual tale that turns everyday assumptions upside down. Reality is more flexible than we believe, and perception shapes everything we think we know.",
-      Imgurl: "https://imgs.search.brave.com/dlsn4Y185DmiXYcS1igUAoxfDEyCGpmmQ82d5jGZYz4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTA4/MjI0NjE3L3Bob3Rv/L3NpbGhvdWV0dGUt/b2YtYS1wcmlzb24t/cG9saWNlLXdhcmRl/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9OVhoTl8yM3hH/R0JwOWxPVk5VX1Fs/eUlUdWNZUTczb1Vz/UERtdmdhOGtMOD0",
-      upvotes: 0,
-      upvoters: []
-    },
-    {
-      title: "Dark Forest Theory",
-      content: "A haunting story about shadows, secrets, and the unknown. In the depths of the forest, civilizations rise and fall, leaving whispers in the wind.",
-      Imgurl: "https://imgs.search.brave.com/KGaxf6oiugeg3DmnUCevCmBxQKRU2oi5LfWgwLYF5dg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTMy/NTIzMzU5L3Bob3Rv/L3Nwb29reS1kYXJr/LWZvcmVzdC1hdC1u/aWdodC1pbi1tb29u/bGlnaHQuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPWw2SXlT/Q2I1cDVvcW5sVE5v/VEpuY2x3UFdkazdO/MjEzVVpRYzg0d0FM/U3c9",
-      upvotes: 0,
-      upvoters: []
-    },
+  
+      {
+    title: "Dark Forest Theory",
+
+    category: "Theory",
+
+    intensity: "High",
+
+    readTime: "8 min",
+
+    content: "...",
+
+    Imgurl: "...",
+
+    upvotes:0,
+    upvoters:[]
+},
     {
       title: "The Void",
       content: "Sometimes the answers we seek are found in emptiness. This philosophical journey explores what lies between existence and nothingness.",

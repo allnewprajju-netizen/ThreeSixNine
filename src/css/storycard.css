@@ -1,321 +1,387 @@
-/* Card Container */
-.story-card {
-    background: linear-gradient(
-        135deg,
-        rgba(26, 26, 40, 0.9) 0%,
-        rgba(22, 33, 62, 0.9) 100%
-    );
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+/* ===================================================
+   THREESIXNINE ARCHIVE CARD
+=================================================== */
+
+.story-card{
+    background:#15181d;
+    border:1px solid #2a2f37;
+    border-radius:18px;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+
+    transition:.28s;
+
     box-shadow:
-        0 8px 32px rgba(0, 217, 255, 0.15),
-        0 0 20px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 217, 255, 0.1);
+        0 10px 28px rgba(0,0,0,.45);
 }
 
-/* Card Hover Pop Effect */
-.story-card:hover {
-    transform: translateY(-8px);
+.story-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:#3b4350;
+
     box-shadow:
-        0 16px 40px rgba(0, 217, 255, 0.3),
-        0 0 30px rgba(0, 217, 255, 0.2);
-    border-color: rgba(0, 217, 255, 0.3);
+        0 24px 60px rgba(0,0,0,.55);
 }
 
-/* Poster Wrapper Container */
-.story-poster {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 2 / 3;
-    overflow: hidden;
-    background: linear-gradient(
-        135deg,
-        #1a1a2e 0%,
-        #16213e 100%
+
+/* ===========================
+   IMAGE
+=========================== */
+
+.story-poster{
+
+    position:relative;
+
+    aspect-ratio:16/9;
+
+    overflow:hidden;
+
+    background:#0f1115;
+}
+
+.story-poster img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.45s;
+}
+
+.story-card:hover .story-poster img{
+
+    transform:scale(1.08);
+}
+
+
+/* overlay */
+
+.story-overlay{
+
+    position:absolute;
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:flex-end;
+
+    padding:24px;
+
+    opacity:0;
+
+    transition:.3s;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.92),
+        rgba(0,0,0,.35),
+        transparent
     );
 }
 
-/* Image Setup */
-.story-poster img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+.story-card:hover .story-overlay{
+
+    opacity:1;
 }
 
-/* Zoom Image on Hover */
-.story-card:hover .story-poster img {
-    transform: scale(1.05);
+.read-btn{
+
+    background:white;
+
+    color:#111;
+
+    text-decoration:none;
+
+    padding:13px 24px;
+
+    border-radius:999px;
+
+    font-size:.9rem;
+
+    font-weight:700;
+
+    transition:.2s;
 }
 
-/* Hover Overlay Hidden by Default */
-.story-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+.read-btn:hover{
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    transform:translateY(-2px);
 
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-/* Reveal Overlay on Hover */
-.story-poster:hover .story-overlay {
-    opacity: 1;
-}
-
-/* Read Button */
-.read-btn {
-    padding: 0.8rem 1.8rem;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #ffffff;
-
-    background: linear-gradient(
-        135deg,
-        #00d9ff 0%,
-        #0099cc 100%
-    );
-
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-
-    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
-}
-
-.read-btn:hover {
-    background: linear-gradient(
-        135deg,
-        #00ffff 0%,
-        #00ccff 100%
-    );
-
-    box-shadow: 0 0 25px rgba(0, 217, 255, 0.6);
-}
-
-/* Slide Up Button on Hover */
-.story-poster:hover .read-btn {
-    transform: translateY(0);
+    background:#ececec;
 }
 
 
-/* ========================================= */
-/* STORY INFORMATION SECTION */
-/* ========================================= */
+/* ===========================
+   BODY
+=========================== */
 
-.story-info {
-    padding: 1.5rem;
+.story-info{
 
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    padding:22px;
 
-    background: rgba(0, 0, 0, 0.3);
+    display:flex;
 
-    border-top: 1px solid rgba(0, 217, 255, 0.1);
+    flex-direction:column;
+
+    gap:15px;
 }
 
 
-/* ========================================= */
-/* TEXT GROUP */
-/* ========================================= */
+/* ===========================
+   BADGES
+=========================== */
 
-.text-group {
-    width: 100%;
+.story-top{
 
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.category-badge,
+.intensity-badge{
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:.72rem;
+
+    letter-spacing:1px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+}
+
+/* categories */
+
+.category-badge{
+
+    background:#202833;
+
+    color:#9cc8ff;
+
+    border:1px solid #33527d;
+}
+
+/* intensity */
+
+.intensity-badge{
+
+    background:#242424;
+
+    border:1px solid #444;
+}
+
+/* intensity colors */
+
+.intensity-low{
+
+    color:#6ee7b7;
+}
+
+.intensity-medium{
+
+    color:#ffd166;
+}
+
+.intensity-high{
+
+    color:#ff8a65;
+}
+
+.intensity-extreme{
+
+    color:#ff4f4f;
 }
 
 
-/* ========================================= */
-/* TITLE */
-/* ========================================= */
+/* ===========================
+   TITLE
+=========================== */
 
-.text-group h3 {
-    width: 100%;
+.story-info h3{
 
-    margin: 0 0 0.8rem 0;
+    margin:0;
 
-    color: #ffffff;
+    color:white;
 
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.15;
+    font-size:1.35rem;
 
-    /*
-     * The title gets the entire width of the card.
-     * It is no longer sharing horizontal space with buttons.
-     */
-    overflow-wrap: break-word;
+    line-height:1.35;
+
+    font-weight:750;
 }
 
 
-/* ========================================= */
-/* DATE */
-/* ========================================= */
+/* ===========================
+   META
+=========================== */
 
-.text-group p {
-    margin: 0;
+.creator-name{
 
-    font-size: 0.85rem;
-    color: #aaaaaa;
-    font-weight: 400;
+    margin:0;
+
+    color:#c0c6d0;
+
+    font-size:.87rem;
 }
 
-.story-meta {
-    margin: 0 0 0.3rem 0;
+.story-meta{
+
+    display:flex;
+
+    align-items:center;
+
+    color:#7f8897;
+
+    font-size:.82rem;
 }
 
+.dot{
 
-/* ========================================= */
-/* CREATOR NAME */
-/* ========================================= */
+    width:4px;
+    height:4px;
 
-.creator-name {
-    color: #888888;
-    font-size: 0.8rem;
+    margin:0 10px;
 
-    margin: 0.2rem 0 0 0;
+    border-radius:50%;
 
-    font-style: italic;
-}
-
-
-/* ========================================= */
-/* UPVOTE DISPLAY */
-/* ========================================= */
-
-.upvote-display {
-    font-size: 0.8rem;
-    color: #ffd700;
-
-    margin-top: 0.4rem;
-
-    font-weight: 600;
+    background:#555;
 }
 
 
-/* ========================================= */
-/* CARD BUTTONS */
-/* ========================================= */
+/* ===========================
+   ARCHIVE RATING
+=========================== */
 
-.card-buttons {
-    display: flex;
-    gap: 0.5rem;
+.archive-rating{
 
-    /*
-     * Put buttons on their own row
-     * and align them to the right.
-     */
-    align-self: flex-end;
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:6px;
+
+    padding-top:16px;
+
+    border-top:1px solid #252b33;
+}
+
+.archive-rating span{
+
+    color:#7f8897;
+
+    font-size:.82rem;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+.archive-rating strong{
+
+    color:#ffd166;
+
+    font-size:1rem;
 }
 
 
-/* ========================================= */
-/* SHARED BUTTON STYLING */
-/* ========================================= */
+/* ===========================
+   BUTTONS
+=========================== */
+
+.card-buttons{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+    margin-top:8px;
+}
 
 .upvote-btn,
-.fav-btn {
-    width: 48px;
-    height: 48px;
+.fav-btn{
 
-    padding: 0;
+    width:44px;
+    height:44px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius:12px;
 
-    cursor: pointer;
+    border:1px solid #303743;
 
-    transition: all 0.2s ease;
+    background:#1d2128;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.22s;
+
+    font-size:1rem;
+}
+
+.upvote-btn:hover,
+.fav-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:#29303b;
+
+    border-color:#495363;
+}
+
+.upvote-btn.upvoted{
+
+    background:#ffd166;
+
+    color:black;
+
+    border-color:#ffd166;
 }
 
 
-/* ========================================= */
-/* FAVORITE BUTTON */
-/* ========================================= */
+/* ===========================
+   MOBILE
+=========================== */
 
-.fav-btn {
-    font-size: 1.5rem;
+@media(max-width:700px){
 
-    color: #ffffff;
+.story-info{
 
-    background-color: #1a1a1a;
-
-    border: 1px solid #333333;
-    border-radius: 4px;
+    padding:18px;
 }
 
-.fav-btn:hover {
-    background-color: #ffffff;
-    color: #1a1a1a;
+.story-info h3{
+
+    font-size:1.15rem;
 }
 
+.story-top{
 
-/* ========================================= */
-/* UPVOTE BUTTON */
-/* ========================================= */
-
-.upvote-btn {
-    font-size: 1rem;
-
-    background-color: #1a1a1a;
-
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 4px;
+    flex-wrap:wrap;
 }
 
-.upvote-btn:hover {
-    background-color: rgba(255, 215, 0, 0.1);
+.read-btn{
 
-    border-color: rgba(255, 215, 0, 0.6);
+    width:100%;
 
-    transform: scale(1.1);
+    text-align:center;
 }
 
-
-/* Upvoted State */
-.upvote-btn.upvoted {
-    background-color: rgba(255, 215, 0, 0.2);
-
-    border-color: #ffd700;
-
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-}
-
-
-/* ========================================= */
-/* RESPONSIVE DESIGN */
-/* ========================================= */
-
-@media (max-width: 500px) {
-    .story-info {
-        padding: 1rem;
-    }
-
-    .text-group h3 {
-        font-size: 1.3rem;
-    }
-
-    .upvote-btn,
-    .fav-btn {
-        width: 42px;
-        height: 42px;
-    }
 }

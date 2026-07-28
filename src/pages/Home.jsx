@@ -69,8 +69,8 @@ function Home({ stories = [], onAddFavorite, onUpvote, currentUser }) {
                 <div className="featured-section">
 
                     <div className="featured-label">
-                        TRENDING
-                    </div>
+    MOST CREDIBLE REPORT
+</div>
 
 
                     <div className="featured-card">
@@ -105,10 +105,22 @@ function Home({ stories = [], onAddFavorite, onUpvote, currentUser }) {
 
 
                             <p className="featured-creator">
-                                by{" "}
-                                {mostUpvoted.creatorName ||
-                                    "Anonymous"}
-                            </p>
+    by {mostUpvoted.creatorName || "Anonymous"}
+</p>
+
+<div className="story-tags">
+    <span className="story-tag">
+        {mostUpvoted.storyType || "Conspiracy"}
+    </span>
+
+    <span className={`story-intensity intensity-${(mostUpvoted.intensity || "Low").toLowerCase()}`}>
+        {mostUpvoted.intensity || "Low"}
+    </span>
+
+    <span className={`story-status status-${(mostUpvoted.status || "Unverified").toLowerCase().replace(" ", "-")}`}>
+        {mostUpvoted.status || "Unverified"}
+    </span>
+</div>
 
 
                             <p className="featured-description">

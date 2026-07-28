@@ -1,61 +1,152 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../css/storycard.css"
+import "../css/storycard.css";
 
-function StoryCard({ story, onAddFavorite, onUpvote, currentUser }) {
-    const [imageSrc, setImageSrc] = useState(story?.Imgurl || '/default.png');
+function StoryCard({
+    story,
+    onAddFavorite,
+    onUpvote,
+    currentUser
+}) {
 
-    function addFav() {
-        if (onAddFavorite) {
-            onAddFavorite(story);
-        }
-    }
-
-    function handleUpvote(e) {
-        e.preventDefault();
-        if (onUpvote) {
-            onUpvote(story.id);
-        }
-    }
-
-    function handleImageError() {
-        setImageSrc('/default.png');
-    }
+    const [imageSrc, setImageSrc] = useState(
+        story?.Imgurl || "/default.png"
+    );
 
     if (!story || !story.title) {
         return null;
     }
 
-    const hasUpvoted = currentUser && story.upvoters && story.upvoters.includes(currentUser.uid);
+    const hasUpvoted =
+        currentUser &&
+        story.upvoters?.includes(currentUser.uid);
+
+    const readTime =
+        story.readTime ||
+        `${Math.max(
+            1,
+            Math.ceil(
+                (story.content?.split(/\s+/).length || 0) / 200
+            )
+        )} min`;
+
+    const category =
+        story.category || "Unknown";
+
+    const intensity =
+        story.intensity || "Medium";
+
+    function handleImageError() {
+        setImageSrc("/default.png");
+    }
+
+    function handleUpvote(e) {
+        e.preventDefault();
+
+        if (onUpvote) {
+            onUpvote(story.id);
+        }
+    }
+
+    function handleFavorite(e) {
+        e.preventDefault();
+
+        if (onAddFavorite) {
+            onAddFavorite(story);
+        }
+    }
 
     return (
+
         <div className="story-card">
+
             <div className="story-poster">
-                <img src={imageSrc} alt={story.title} onError={handleImageError} />
+
+                <img
+                    src={imageSrc}
+                    alt={story.title}
+                    onError={handleImageError}
+                />
+
                 <div className="story-overlay">
-                    <Link className="read-btn" to={`/story/${story.id}`}>READ</Link>
-                </div>
-            </div>
-            <div className="story-info">
-                <div className="text-group">
-                    <h3>{story.title}</h3>
-                    <p className="story-meta">{story.date}</p>
-                    {story.creatorName && <p className="creator-name">by {story.creatorName}</p>}
-                    <div className="upvote-display">⭐ {story.upvotes || 0} upvotes</div>
-                </div>
-                <div className="card-buttons">
-                    <button
-                        className={`upvote-btn ${hasUpvoted ? 'upvoted' : ''}`}
-                        onClick={handleUpvote}
-                        title={currentUser ? (hasUpvoted ? 'Remove upvote' : 'Upvote') : 'Sign in to upvote'}
+
+                    <Link
+                        className="read-btn"
+                        to={`/story/${story.id}`}
                     >
-                        ⭐
-                    </button>
-                    <button className="fav-btn" onClick={addFav}>♡</button>
+                        READ REPORT
+                    </Link>
+
                 </div>
+
             </div>
+
+            <div className="story-info">
+
+                <div className="story-top">
+
+                    <span className={`category-badge ${category.toLowerCase().replace(/\s/g, "-")}`}>
+                        {category.toUpperCase()}
+                    </span>
+
+                    <span className={`intensity-badge intensity-${intensity.toLowerCase()}`}>
+                        {intensity.toUpperCase()}
+                    </span>
+
+                </div>
+
+                <h3>
+                    {story.title}
+                </h3>
+
+                <p className="creator-name">
+                    Submitted by {story.creatorName || "Unknown"}
+                </p>
+
+                <p className="story-meta">
+                    {story.date}
+                    <span className="dot"></span>
+                    {readTime} read
+                </p>
+
+                <div className="archive-rating">
+
+                    <span>
+                        Archive Rating
+                    </span>
+
+                    <strong>
+                        {story.upvotes || 0}
+                    </strong>
+
+                </div>
+
+                <div className="card-buttons">
+
+                    <button
+                        className={`upvote-btn ${
+                            hasUpvoted ? "upvoted" : ""
+                        }`}
+                        onClick={handleUpvote}
+                    >
+                        ★
+                    </button>
+
+                    <button
+                        className="fav-btn"
+                        onClick={handleFavorite}
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+            </div>
+
         </div>
+
     );
+
 }
 
-export default StoryCard
+export default StoryCard;
