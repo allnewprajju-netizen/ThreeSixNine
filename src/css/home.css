@@ -625,9 +625,7 @@
 
 .story-detail-content{
     width:100%;
-    max-width:none;
-    padding:60px 10%;
-    box-sizing:border-box;
+    padding:30px 20px;
 }
 
 /* ---------- Header ---------- */
@@ -864,9 +862,16 @@
 
 .story-detail-content{
 
-    max-width:760px;
+    width:100%;
+    
+    max-width:none;
 
-    margin:auto;
+    margin:0;
+
+    padding:60px 8%;
+
+    box-sizing:border-box;
+
 }
 
 /* ---------- Responsive ---------- */
@@ -889,9 +894,24 @@
 
 .content{
 
-    font-size:1rem;
+    width:100%;
 
-    line-height:1.9;
+    max-width:none;
+
+    margin-top:30px;
+
+    font-size:1.15rem;
+
+    line-height:2.05;
+
+    color:#d0d7de;
+
+    white-space:pre-wrap;
+
+    letter-spacing:.3px;
+
+    font-family:Georgia, "Times New Roman", serif;
+
 }
 
 .content::first-letter{
@@ -909,7 +929,8 @@
 
 .story-hero-overlay{
 
-    padding:22px;
+    padding:50px 8%;
+
 }
 
 .story-toolbar{
