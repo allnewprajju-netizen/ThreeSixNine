@@ -65,7 +65,7 @@ function StoryCard({
 
 
     const category =
-        story.category || "Unknown";
+        story.category || " Unknown ";
 
 
 
@@ -201,7 +201,7 @@ function StoryCard({
 
                 <p className="creator-name">
 
-                    Submitted by {story.creatorName || "Unknown"}
+                    Submitted by {story.creatorName || " Unknown "}
 
                 </p>
 
