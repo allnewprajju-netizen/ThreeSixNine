@@ -215,25 +215,64 @@
 /* TABLET */
 /* ========================================= */
 
-@media(max-width:900px){
+@media(max-width:650px){
 
 .navbar{
 
-    padding:0 1.2rem;
+    height:56px;
+
+    padding:0 0.8rem;
+
+    flex-wrap:nowrap;
+
+    gap:0.5rem;
 
 }
+
+
+/* Logo */
+
+.nav-brand a{
+
+    font-size:.9rem;
+
+    letter-spacing:2px;
+
+}
+
+
+/* Links */
 
 .nav-links{
 
-    gap:1rem;
+    display:flex;
+
+    gap:.8rem;
+
+    flex:1;
+
+    justify-content:center;
 
 }
+
 
 .nav-links a{
 
-    font-size:.85rem;
+    font-size:.7rem;
+
+    white-space:nowrap;
 
 }
+
+
+/* Auth buttons */
+
+.nav-auth{
+
+    gap:.3rem;
+
+}
+
 
 .user-email{
 
@@ -241,11 +280,17 @@
 
 }
 
+
 .auth-btn,
 .admin-btn{
 
-    padding:0 14px;
-    font-size:.8rem;
+    height:30px;
+
+    padding:0 10px;
+
+    font-size:.65rem;
+
+    white-space:nowrap;
 
 }
 
